@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<head>
+<style>
+body {
+  /* Set "my-sec-counter" to 0 */
+  counter-reset: my-sec-counter;
+}
+
+{% comment %} table > tbody > tr::before {
+  counter-increment: my-sec-counter;
+  content: counter(my-sec-counter) ". ";
+} {% endcomment %}
+.only::before {
+  counter-increment: my-sec-counter;
+  content: "Column " counter(my-sec-counter) ". ";
+}
+input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+</style>
+</head>
+<a href="#" class='p-3 mb-2 bg-secondary text-white float-left'>USER LOGGED IN</a>
+
+<a href="/" class='p-3 mb-2 bg-secondary text-white float-right'>LOGOUT</a>
+<h2 class = 'text-center'>Speard Sheet</h2>
+<form action='/data_submit' method='POST'>
+{% csrf_token %}
+<table class="table table-hover table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      {% for i in columns %}
+      <th class= 'only' scope="col"></th>
+      {%  endfor %}
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in rows %}
+    <tr>
+      <th scope="row">{{i}}</th>
+      {% for i in columns %}
+      <td><input type="text" name="data[]"/></td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+</form>
+
+</body>
+</html>
